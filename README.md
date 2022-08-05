@@ -17,4 +17,4 @@ switch to that `dart_example` directory and, while referencing the compiled libr
 
 ### Flutter Usage
 
-The [dart_example](./dart_example) directory is a minimal pub dependency which can easily be consumed by any Flutter application. To observe a basic Flutter application change to the `flutter_example` directory on your favorite platform and execute `flutter run`.
+The [dart_example](./dart_example) directory is a minimal pub dependency which can easily be consumed by any Flutter application. To observe a basic Flutter application change to the `flutter_example` directory on your favorite platform and execute `flutter run` while specifying the path to the library _directory_ (not the library file itself). For example on Linux desktop with the library compiled in debug mode with `cargo build` you would use `LD_LIBRARY_PATH="../rust_example/target/debug" flutter run`.

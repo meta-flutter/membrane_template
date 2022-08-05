@@ -1,3 +1,4 @@
+import 'package:dart_example/time.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -48,16 +49,10 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
+  Stream<String> _clock() {
+    const timeApi = TimeApi();
+    return timeApi.currentTime().map((time) {
+      return 'Rust says it has been ${commafy(time.toString())} seconds since January 1, 1970';
     });
   }
 
@@ -78,38 +73,48 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
+        child: StreamBuilder(
+          stream: _clock(),
+          builder: (context, AsyncSnapshot<String> snapshot) {
+            if (snapshot.hasData) {
+              return Text(
+                snapshot.data!,
+                style: const TextStyle(fontSize: 30, color: Colors.blue),
+              );
+            } else {
+              return RichText(
+                  textAlign: TextAlign.center,
+                  text: const TextSpan(
+                    children: [
+                      TextSpan(
+                          text: 'No data.\n\n',
+                          style: TextStyle(fontSize: 30, color: Colors.red)),
+                      TextSpan(
+                        text:
+                            'Have you set envar [DY]LD_LIBRARY_PATH to point to the directory which contains librust_example?',
+                      )
+                    ],
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.grey,
+                    ),
+                  ));
+            }
+          },
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
+}
+
+String commafy(String value) {
+  var input = value.codeUnits.reversed.toList();
+  List<int> chunks = [];
+  int chunkSize = 3;
+  for (var i = 0; i < input.length; i += chunkSize) {
+    chunks.addAll(input.sublist(
+        i, i + chunkSize > input.length ? input.length : i + chunkSize));
+    chunks.add(','.codeUnits[0]);
+  }
+  return String.fromCharCodes(chunks.reversed).replaceFirst(',', '');
 }
