@@ -1,0 +1,31 @@
+name: 'NativeLibrary'
+description: 'Auto generated bindings for Dart types'
+output: './lib/src/ffi_bindings.dart'
+sort: true
+enums:
+  include:
+    - MembraneMsgKind
+    - MembraneResponseKind
+  member-rename:
+    'Membrane(.*)':
+      'Data': 'data'
+      'Error': 'error'
+      'Ok': 'ok'
+      'Panic': 'panic'
+macros:
+  include:
+    - __none__
+structs:
+  include:
+    - MembraneResponse
+unions:
+  include:
+    - __none__
+unnamed-enums:
+  include:
+    - __none__
+headers:
+  entry-points:
+    - 'lib/src/membrane_types.h'
+    - 'lib/src/*/*.h'
+
