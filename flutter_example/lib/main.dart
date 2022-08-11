@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dart_example/time.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +14,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Membrane Template',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -25,7 +27,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Membrane Template Home Page'),
     );
   }
 }
@@ -82,19 +84,29 @@ class _MyHomePageState extends State<MyHomePage> {
                 style: const TextStyle(fontSize: 30, color: Colors.blue),
               );
             } else {
+              final TextSpan message;
+              if (Platform.isMacOS) {
+                message = const TextSpan(
+                  text:
+                      'Have you set envar DYLD_LIBRARY_PATH to point to the directory which contains librust_example.dylib?',
+                );
+              } else {
+                message = const TextSpan(
+                  text:
+                      'Have you set envar LD_LIBRARY_PATH to point to the directory which contains librust_example.so?',
+                );
+              }
+
               return RichText(
                   textAlign: TextAlign.center,
-                  text: const TextSpan(
+                  text: TextSpan(
                     children: [
-                      TextSpan(
+                      const TextSpan(
                           text: 'No data.\n\n',
                           style: TextStyle(fontSize: 30, color: Colors.red)),
-                      TextSpan(
-                        text:
-                            'Have you set envar [DY]LD_LIBRARY_PATH to point to the directory which contains librust_example?',
-                      )
+                      message
                     ],
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 20,
                       color: Colors.grey,
                     ),

@@ -1,7 +1,10 @@
 [package]
+description = "A ready-to-go template repository to get you up and running easily with Membrane"
 edition = "2021"
+homepage = "https://github.com/jerel/membrane"
 license = "Apache-2.0"
 name = "rust_example"
+repository = "https://github.com/jerel/membrane_template"
 version = "0.1.0"
 
 [[bin]]
@@ -24,4 +27,4 @@ codegen-units = 1
 # optimize at link time to remove dead code
 lto = true
 # remove unneeded symbols from the elf to reduce binary size
-strip = true
+strip = "symbols"
