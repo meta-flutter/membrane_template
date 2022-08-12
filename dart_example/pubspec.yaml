@@ -8,3 +8,8 @@ dependencies:
   logging: ^1.0.2
 dev_dependencies:
   ffigen: ^6.0.1
+flutter:
+  plugin:
+    platforms:
+      macos:
+        pluginClass: DartExamplePlugin
