@@ -30,3 +30,5 @@ pub fn current_time() -> impl Stream<Item = Result<i64, String>> {
       }
     }
 }
+
+pub fn load() {}
