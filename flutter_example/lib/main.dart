@@ -2,8 +2,15 @@ import 'dart:io';
 
 import 'package:dart_example/time.dart';
 import 'package:flutter/material.dart';
+import 'package:logging/logging.dart';
 
 void main() {
+  Logger.root.level = Level.ALL;
+  Logger.root.onRecord.listen((record) {
+    print(
+        '[${record.loggerName}] ${record.level.name}: ${record.time}: ${record.message}');
+  });
+  Logger('app').info('flutter_example is starting');
   runApp(const MyApp());
 }
 
