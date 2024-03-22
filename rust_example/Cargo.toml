@@ -17,7 +17,7 @@ crate-type = ["lib", "cdylib", "staticlib"]
 [dependencies]
 async-stream = "0.3"
 futures = "0.3"
-membrane = {git = "https://github.com/jerel/membrane"}
+membrane = {git = "https://github.com/jerel/membrane", rev = "0ad0fc8907c93e087e01598260bee1863f5adc02"}
 once_cell = "1.8"
 tokio = {version = "1", features = ["rt-multi-thread", "time"]}
 
